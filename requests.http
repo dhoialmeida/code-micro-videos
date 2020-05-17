@@ -1,0 +1,17 @@
+# Arquivo de requests para extensão REST Client do VSCode
+
+# Mostrar todas as categorias
+GET http://localhost:8000/api/categories
+
+###
+
+# Mostrar dados de uma categoria
+GET http://localhost:8000/api/categories/1
+
+###
+
+# Mostrar dados de uma categoria inexistente
+GET http://localhost:8000/api/categories/0
+Accept: application/json
+
+###
