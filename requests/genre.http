@@ -1,0 +1,44 @@
+# Arquivo de requests para extensão REST Client do VSCode
+
+### Mostrar todos os generos
+GET http://localhost:8000/api/genres
+Accept: application/json
+
+### Mostrar dados de um genero
+GET http://localhost:8000/api/genres/101
+
+### Mostrar dados de um genero inexistente
+GET http://localhost:8000/api/genres/0
+Accept: application/json
+
+### Inserir novo genero
+POST http://localhost:8000/api/genres
+Accept: application/json
+Content-Type: application/json
+
+{
+    "name": "genre 2",
+    "is_active": false
+}
+
+### Tentar inserir genero inválido
+POST http://localhost:8000/api/genres
+Accept: application/json
+Content-Type: application/json
+
+{
+    "is_active": false
+}
+
+### Update de genero
+PUT http://localhost:8000/api/genres/1
+Content-Type: application/json
+Accept: application/json
+
+{
+    "name": "nome novo"
+}
+
+### Deletar genero
+DELETE  http://localhost:8000/api/genres/101
+Accept: application/json
