@@ -4,7 +4,7 @@
 GET http://localhost:8000/api/categories
 
 ### Mostrar dados de uma categoria
-GET http://localhost:8000/api/categories/1
+GET http://localhost:8000/api/categories/101
 
 ### Mostrar dados de uma categoria inexistente
 GET http://localhost:8000/api/categories/0
@@ -40,3 +40,7 @@ Accept: application/json
     "name": "nome novo",
     "description": "descrição nova"
 }
+
+### Deletar categoria
+DELETE  http://localhost:8000/api/categories/101
+Accept: application/json
