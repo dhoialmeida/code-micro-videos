@@ -1,17 +1,32 @@
 # Arquivo de requests para extensão REST Client do VSCode
 
-# Mostrar todas as categorias
+### Mostrar todas as categorias
 GET http://localhost:8000/api/categories
 
-###
-
-# Mostrar dados de uma categoria
+### Mostrar dados de uma categoria
 GET http://localhost:8000/api/categories/1
 
-###
-
-# Mostrar dados de uma categoria inexistente
+### Mostrar dados de uma categoria inexistente
 GET http://localhost:8000/api/categories/0
 Accept: application/json
 
-###
+### Inserir nova categoria
+POST http://localhost:8000/api/categories
+Accept: application/json
+Content-Type: application/json
+
+{
+    "name": "category 2",
+    "description": "descrição",
+    "is_active": false
+}
+
+### Tentar inserir categoria inválida
+POST http://localhost:8000/api/categories
+Accept: application/json
+Content-Type: application/json
+
+{
+    "description": "descrição",
+    "is_active": false
+}
