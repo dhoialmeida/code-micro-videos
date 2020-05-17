@@ -30,3 +30,13 @@ Content-Type: application/json
     "description": "descrição",
     "is_active": false
 }
+
+### Update de categoria
+PUT http://localhost:8000/api/categories/1
+Content-Type: application/json
+Accept: application/json
+
+{
+    "name": "nome novo",
+    "description": "descrição nova"
+}
