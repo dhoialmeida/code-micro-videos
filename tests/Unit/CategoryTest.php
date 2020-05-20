@@ -2,14 +2,16 @@
 
 namespace Tests\Unit;
 
-use App\Models\Category;
 use Tests\TestCase;
+use App\Models\Category;
 use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class CategoryTest extends TestCase
 {
+    use DatabaseMigrations;
     public function testFillableAttribute()
     {
         $fillable = ['name', 'description', 'is_active'];
