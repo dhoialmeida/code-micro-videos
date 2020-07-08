@@ -82,7 +82,7 @@ class CategoryTest extends TestCase
         }
     }
 
-    public function testDestroy()
+    public function testDelete()
     {
         $category = factory(Category::class, 1)->create()->first();
         $this->assertNotNull(Category::find($category)->first());
