@@ -32,6 +32,11 @@ class CategoryTest extends TestCase
         $this->assertNull($category->description);
         $this->assertTrue($category->is_active);
 
+        // Valid UUID (V4)
+        $uuid_v4_regex = "#^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$#i";
+        $result = (bool) preg_match($uuid_v4_regex, $category->id);
+        $this->assertTrue($result);
+
         $category = Category::create([
             'name' => 'test1',
             'description' => null
@@ -75,5 +80,13 @@ class CategoryTest extends TestCase
         foreach ($data as $key => $value) {
             $this->assertEquals($value, $category->{$key});
         }
+    }
+
+    public function testDestroy()
+    {
+        $category = factory(Category::class, 1)->create()->first();
+        $this->assertNotNull(Category::find($category)->first());
+        $category->delete();
+        $this->assertNull(Category::find($category)->first());
     }
 }
