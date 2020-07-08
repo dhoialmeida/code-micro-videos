@@ -22,4 +22,38 @@ class CategoryTest extends TestCase
             $categoryKeys
         );
     }
+
+    public function testCreate()
+    {
+        $category = Category::create(['name' => 'test1']);
+        $category->refresh();
+
+        $this->assertEquals($category->name, 'test1');
+        $this->assertNull($category->description);
+        $this->assertTrue($category->is_active);
+
+        $category = Category::create([
+            'name' => 'test1',
+            'description' => null
+        ]);
+        $this->assertNull($category->description);
+
+        $category = Category::create([
+            'name' => 'test1',
+            'description' => 'test_description'
+        ]);
+        $this->assertEquals($category->description, 'test_description');
+
+        $category = Category::create([
+            'name' => 'test1',
+            'is_active' => false
+        ]);
+        $this->assertFalse($category->is_active);
+
+        $category = Category::create([
+            'name' => 'test1',
+            'is_active' => true
+        ]);
+        $this->assertTrue($category->is_active);
+    }
 }
