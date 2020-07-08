@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit;
+namespace Tests\Unit\Models;
 
 use Tests\TestCase;
 use App\Models\Category;
@@ -11,8 +11,6 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class CategoryTest extends TestCase
 {
-    use DatabaseMigrations;
-
     private $category;
 
     protected function setUp(): void
