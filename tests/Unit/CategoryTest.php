@@ -12,11 +12,29 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 class CategoryTest extends TestCase
 {
     use DatabaseMigrations;
+
+    private $category;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->category = new Category();
+    }
+
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+    }
+
+    public static function setUpBeforeClass(): void
+    {
+        parent::setUpBeforeClass();
+    }
+
     public function testFillableAttribute()
     {
         $fillable = ['name', 'description', 'is_active'];
-        $category = new Category();
-        $this->assertEquals($fillable, $category->getFillable());
+        $this->assertEquals($fillable, $this->category->getFillable());
     }
 
     public function testTraits()
@@ -30,23 +48,20 @@ class CategoryTest extends TestCase
     public function testCastsAttribute()
     {
         $casts = ['id' => 'string'];
-        $category = new Category();
-        $this->assertEquals($casts, $category->getCasts());
+        $this->assertEquals($casts, $this->category->getCasts());
     }
 
     public function testIncrementingAttribute()
     {
-        $category = new Category();
-        $this->assertFalse($category->incrementing);
+        $this->assertFalse($this->category->incrementing);
     }
 
     public function testDatesAttribute()
     {
         $dates = ['deleted_at', 'created_at', 'updated_at'];
-        $category = new Category();
         foreach ($dates as $date) {
-            $this->assertContains($date, $category->getDates());
+            $this->assertContains($date, $this->category->getDates());
         }
-        $this->assertCount(count($dates), $category->getDates());
+        $this->assertCount(count($dates), $this->category->getDates());
     }
 }
