@@ -12,7 +12,7 @@ use Illuminate\Foundation\Testing\TestResponse;
 use Illuminate\Support\Facades\Lang;
 use PHPUnit\Framework\Test;
 
-class CategoryControllerTest extends TestCase
+class GenreControllerTest extends TestCase
 {
     use DatabaseMigrations;
     /**
