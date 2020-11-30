@@ -10,10 +10,11 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\TestResponse;
 use Illuminate\Support\Facades\Lang;
 use PHPUnit\Framework\Test;
+use Tests\Traits\TestValidations;
 
 class CategoryControllerTest extends TestCase
 {
-    use DatabaseMigrations;
+    use DatabaseMigrations, TestValidations;
     /**
      * A basic feature test example.
      *
@@ -58,25 +59,13 @@ class CategoryControllerTest extends TestCase
     }
 
     private function assertInvalidationRequired(TestResponse $response) {
-        $response
-            ->assertStatus(422)
-            ->assertJsonValidationErrors(['name'])
-            ->assertJsonMissingValidationErrors('is_active')
-            ->assertJsonFragment([
-                Lang::get('validation.required', ['attribute' => 'name'])
-            ]);
+        $this->assertInvalidationFields($response, ['name'], 'required', []);
+        $response->assertJsonMissingValidationErrors(['is_active']);
     }
 
     private function assertInvalidationValid(TestResponse $response) {
-        $response
-            ->assertStatus(422)
-            ->assertJsonValidationErrors(['name', 'is_active'])
-            ->assertJsonFragment([
-                Lang::get('validation.max.string', ['attribute' => 'name', 'max' => 255])
-            ])
-            ->assertJsonFragment([
-                Lang::get('validation.boolean', ['attribute' => 'is active'])
-            ]);
+        $this->assertInvalidationFields($response, ['name'], 'max.string',  ['max' =>  255]);
+        $this->assertInvalidationFields($response, ['is_active'], 'boolean', []);       
     }
 
     public function testStore()
