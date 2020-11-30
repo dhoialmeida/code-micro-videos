@@ -4,8 +4,6 @@ namespace Tests\Feature\Models;
 
 use Tests\TestCase;
 use App\Models\Genre;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class GenreTest extends TestCase
@@ -57,7 +55,7 @@ class GenreTest extends TestCase
 
         $data = [
             'name' => 'test_name_updated',
-            'is_active' =>true,
+            'is_active' => true,
         ];
 
         $genre->update($data);

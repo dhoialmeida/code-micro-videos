@@ -9,7 +9,8 @@ use Tests\TestCase;
 class BasicCrudControllerTest extends TestCase
 {
 
-    protected function setUp(): void {
+    protected function setUp(): void
+    {
         parent::setUp();
         CategoryStub::dropTable();
         CategoryStub::createTable();
@@ -21,7 +22,8 @@ class BasicCrudControllerTest extends TestCase
         parent::tearDown();
     }
 
-    public function testIndex() {
+    public function testIndex()
+    {
         $category = CategoryStub::create(['name' => 'test_name', 'description' => 'test_description']);
         $controller = new CategoryControllerStub();
         $result = $controller->index()->toArray();

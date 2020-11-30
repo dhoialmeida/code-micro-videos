@@ -2,15 +2,11 @@
 
 namespace Tests\Feature\Http\Controllers\Api;
 
-use App\Models\Category;
 use App\Models\Genre;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\TestResponse;
 use Illuminate\Support\Facades\Lang;
-use PHPUnit\Framework\Test;
 
 class GenreControllerTest extends TestCase
 {
@@ -36,16 +32,17 @@ class GenreControllerTest extends TestCase
         $response->assertStatus(200)->assertJson($genre->toArray());
     }
 
-    public function testInvalidationData() {
+    public function testInvalidationData()
+    {
         $response = $this->json('POST', route('genres.store'), []);
         $this->assertInvalidationRequired($response);
-        
+
         $response = $this->json('POST', route('genres.store'), [
             'name' => str_repeat('a', 256),
             'is_active' => 'a'
         ]);
         $this->assertInvalidationValid($response);
-        
+
         $genre = factory(Genre::class)->create();
         $response = $this->json('PUT', route('genres.update', ['genre' => $genre->id]), []);
         $this->assertInvalidationRequired($response);
@@ -58,7 +55,8 @@ class GenreControllerTest extends TestCase
         $this->assertInvalidationValid($response);
     }
 
-    private function assertInvalidationRequired(TestResponse $response) {
+    private function assertInvalidationRequired(TestResponse $response)
+    {
         $response
             ->assertStatus(422)
             ->assertJsonValidationErrors(['name'])
@@ -68,7 +66,8 @@ class GenreControllerTest extends TestCase
             ]);
     }
 
-    private function assertInvalidationValid(TestResponse $response) {
+    private function assertInvalidationValid(TestResponse $response)
+    {
         $response
             ->assertStatus(422)
             ->assertJsonValidationErrors(['name', 'is_active'])
@@ -88,7 +87,7 @@ class GenreControllerTest extends TestCase
 
         $id = $response->json('id');
         $genre = Genre::find($id);
-        
+
         $response
             ->assertStatus(201)
             ->assertJson($genre->toArray());
@@ -142,7 +141,7 @@ class GenreControllerTest extends TestCase
 
         $response
             ->assertStatus(204);
-        
+
         $this->assertNull(Genre::find($genre->id));
         $this->assertNotNull(Genre::withTrashed()->find($genre->id));
     }

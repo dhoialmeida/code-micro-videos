@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models\Traits;
+
 use Ramsey\Uuid\Uuid as RUuid;
 
 trait Uuid

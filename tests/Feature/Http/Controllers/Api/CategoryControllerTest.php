@@ -14,7 +14,8 @@ class CategoryControllerTest extends TestCase
 
     private $category;
 
-    protected function setUp(): void {
+    protected function setUp(): void
+    {
         parent::setUp();
         $this->category = factory(Category::class)->create(['name' => 'test']);
     }
@@ -31,7 +32,8 @@ class CategoryControllerTest extends TestCase
         $response->assertStatus(200)->assertJson($this->category->toArray());
     }
 
-    public function testInvalidationData() {
+    public function testInvalidationData()
+    {
         $data = [
             'name' => '',
         ];
@@ -110,20 +112,23 @@ class CategoryControllerTest extends TestCase
 
         $response
             ->assertStatus(204);
-        
+
         $this->assertNull(Category::find($this->category->id));
         $this->assertNotNull(Category::withTrashed()->find($this->category->id));
     }
 
-    protected function routeStore() {
+    protected function routeStore()
+    {
         return route('categories.store');
     }
 
-    protected function routeUpdate() {
+    protected function routeUpdate()
+    {
         return route('categories.update', ['category' => $this->category]);
     }
 
-    protected function model() {
+    protected function model()
+    {
         return Category::class;
     }
 }

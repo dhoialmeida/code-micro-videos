@@ -4,8 +4,6 @@ namespace Tests\Feature\Models;
 
 use Tests\TestCase;
 use App\Models\Category;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class CategoryTest extends TestCase
@@ -72,7 +70,7 @@ class CategoryTest extends TestCase
         $data = [
             'name' => 'test_name_updated',
             'description' => 'test_description_updated',
-            'is_active' =>true,
+            'is_active' => true,
         ];
 
         $category->update($data);

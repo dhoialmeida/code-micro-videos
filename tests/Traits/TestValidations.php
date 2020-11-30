@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Traits;
@@ -31,7 +32,8 @@ trait TestValidations
         $this->assertInvalidationFields($response, $fields, $rule, $ruleParams);
     }
 
-    protected function assertInvalidationFields(TestResponse $response, array $fields, string $rule, array $ruleParams = []) {
+    protected function assertInvalidationFields(TestResponse $response, array $fields, string $rule, array $ruleParams = [])
+    {
         $response
             ->assertStatus(422)
             ->assertJsonValidationErrors($fields);
