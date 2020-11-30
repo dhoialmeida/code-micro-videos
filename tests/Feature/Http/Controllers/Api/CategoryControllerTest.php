@@ -4,12 +4,7 @@ namespace Tests\Feature\Http\Controllers\Api;
 
 use App\Models\Category;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\TestResponse;
-use Illuminate\Support\Facades\Lang;
-use PHPUnit\Framework\Test;
 use Tests\Traits\TestSaves;
 use Tests\Traits\TestValidations;
 

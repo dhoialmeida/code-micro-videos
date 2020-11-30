@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 
 abstract class BasicCrudController extends Controller
 {
-    protected abstract function model(): Model;
+    protected abstract function model();
 
     private $rules = [
         'name' => 'required|max:255',

@@ -2,14 +2,12 @@
 
 namespace Tests\Traits;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Testing\TestResponse;
-use Illuminate\Routing\Route;
 
 trait TestSaves {
-    protected abstract function model(): Model;
-    protected abstract function routeStore(): Route;
-    protected abstract function routeUpdate(): Route;
+    protected abstract function model();
+    protected abstract function routeStore();
+    protected abstract function routeUpdate();
 
     protected function assertStore($sendData, $testDatabase, $testJsonData = []): TestResponse {
         $response = $this->json('POST', $this->routeStore(), $sendData);
