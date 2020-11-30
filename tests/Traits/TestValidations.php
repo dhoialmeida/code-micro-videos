@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\Lang;
 
 trait TestValidations
 {
+    protected abstract function routeStore(): Route;
+    protected abstract function routeUpdate(): Route;
+
     protected function assertInvalidationInStoreAction(
         array $data,
         string $rule,
