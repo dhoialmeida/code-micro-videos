@@ -25,7 +25,7 @@ trait TestSaves
     protected function assertUpdate($sendData, $testDatabase, $testJsonData = []): TestResponse
     {
         $response = $this->json('PUT', $this->routeUpdate(), $sendData);
-        if ($response->status() !== 200) {
+        if ($response->status() !== 200 && $response->status() !== 201) {
             throw new \Exception("Status must be 200, given {$response->status()}: {$response->content()}.");
         }
 

@@ -3,14 +3,13 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Category;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 
 abstract class BasicCrudController extends Controller
 {
     protected abstract function model();
     protected abstract function rulesStore();
+    protected abstract function rulesUpdate();
 
     public function index()
     {
@@ -31,21 +30,23 @@ abstract class BasicCrudController extends Controller
         return $this->model()::where($keyName, $id)->firstOrFail();
     }
 
-//     public function show(Category $category)
-//     {
-//         return $category;
-//     }
+    public function show($id)
+    {
+        return $this->findOrFail($id);
+    }
 
-//     public function update(Request $request, Category $category)
-//     {
-//         $this->validate($request, $this->rules);
-//         $category->update($request->all());
-//         return $category;
-//     }
+    public function update(Request $request, $id)
+    {
+        $validatedData = $this->validate($request, $this->rulesUpdate());
+        $category = $this->findOrFail($id);
+        $category->update($validatedData);
+        return $category;
+    }
 
-//     public function destroy(Category $category)
-//     {
-//         $category->delete();
-//         return response()->noContent(); // 204 - No content
-//     }
+    public function destroy($id)
+    {
+        $category = $this->findOrFail($id);
+        $category->delete();
+        return response()->noContent(); // 204 - No content
+    }
 }
