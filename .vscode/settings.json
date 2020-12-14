@@ -1,7 +1,6 @@
 {
-    "phpunit.command": "docker exec -it micro-videos-app",
-    "phpunit.docker.container": "micro-videos-app",   // Skip to select from running containers
+    "phpunit.command": "docker-compose exec app",
     "phpunit.paths": {
-        "${workspaceFolder}": "/var/www"                // Map your ${workspaceFolder} to where it
-    }                                               // is in your container. Ex: /app
+        "${workspaceFolder}": "/var/www"
+    }
 }
