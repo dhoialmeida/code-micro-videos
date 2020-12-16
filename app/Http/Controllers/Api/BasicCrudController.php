@@ -24,7 +24,8 @@ abstract class BasicCrudController extends Controller
         return $obj;
     }
 
-    protected function findOrFail($id) {
+    protected function findOrFail($id)
+    {
         $model = $this->model();
         $keyName = (new $model)->getRouteKeyName();
         return $this->model()::where($keyName, $id)->firstOrFail();
@@ -38,15 +39,15 @@ abstract class BasicCrudController extends Controller
     public function update(Request $request, $id)
     {
         $validatedData = $this->validate($request, $this->rulesUpdate());
-        $category = $this->findOrFail($id);
-        $category->update($validatedData);
-        return $category;
+        $obj = $this->findOrFail($id);
+        $obj->update($validatedData);
+        return $obj;
     }
 
     public function destroy($id)
     {
-        $category = $this->findOrFail($id);
-        $category->delete();
+        $obj = $this->findOrFail($id);
+        $obj->delete();
         return response()->noContent(); // 204 - No content
     }
 }

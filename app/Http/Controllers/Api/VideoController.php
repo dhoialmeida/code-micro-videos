@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\Video;
+use Illuminate\Http\Request;
 
 class VideoController extends BasicCrudController
 {
@@ -17,7 +18,29 @@ class VideoController extends BasicCrudController
             'opened' => 'boolean',
             'rating' => 'required|in:' . implode(',', Video::RATING_LIST),
             'duration' => 'required|integer',
+            'categories_id' => 'required|array|exists:categories,id'
         ];
+    }
+
+    public function store(Request $request)
+    {
+        $validateData = $this->validate($request, $this->rulesStore());
+        /** @var Video $obj */
+        $obj = $this->model()::create($validateData);
+        $obj->categories()->sync($request->get('categories_id'));
+        $obj->refresh();
+        return $obj;
+    }
+
+    public function update(Request $request, $id)
+    {
+        $validatedData = $this->validate($request, $this->rulesUpdate());
+
+        /** @var Video $obj */
+        $obj = $this->findOrFail($id);
+        $obj->update($validatedData);
+        $obj->categories()->sync($request->get('categories_id'));
+        return $obj;
     }
 
     protected function model()
