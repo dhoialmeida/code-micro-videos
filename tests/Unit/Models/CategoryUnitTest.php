@@ -4,12 +4,9 @@ namespace Tests\Unit\Models;
 
 use Tests\TestCase;
 use App\Models\Category;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 
-class CategoryTest extends TestCase
+class CategoryUnitTest extends TestCase
 {
     private $category;
 

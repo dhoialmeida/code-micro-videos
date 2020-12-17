@@ -4,12 +4,9 @@ namespace Tests\Unit\Models;
 
 use Tests\TestCase;
 use App\Models\Genre;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 
-class GenreTest extends TestCase
+class GenreUnitTest extends TestCase
 {
     private $genre;
 

@@ -2,9 +2,14 @@
 
 namespace Tests\Feature\Http\Controllers\Api;
 
+use App\Http\Controllers\Api\VideoController;
+use App\Models\Category;
+use App\Models\Genre;
 use App\Models\Video;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Http\Request;
+use Tests\Exceptions\TestException;
 use Tests\Traits\TestSaves;
 use Tests\Traits\TestValidations;
 
@@ -18,7 +23,9 @@ class VideoControllerTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->video = factory(Video::class)->create();
+        $this->video = factory(Video::class)->create([
+            'opened' => false,
+        ]);
         $this->sendData = [
             'title' => 'title',
             'description' => 'description',
@@ -138,17 +145,24 @@ class VideoControllerTest extends TestCase
 
     public function testSave()
     {
+        $category = factory(Category::class)->create();
+        $genre = factory(Genre::class)->create();
+        $extra = [
+            'categories_id' => [$category->id],
+            'genres_id' => [$genre->id]
+        ];
+
         $data = [
             [
-                'send' => $this->sendData,
-                'test' =>  $this->sendData + ['opened' => false],
+                'send' => $this->sendData + $extra,
+                'test' =>  $this->sendData  + ['opened' => false],
             ],
             [
-                'send' => $this->sendData + ['opened' => true],
+                'send' => $this->sendData + $extra + ['opened' => true],
                 'test' => $this->sendData + ['opened' => true],
             ],
             [
-                'send' => $this->sendData + ['rating' => Video::RATING_LIST[1]],
+                'send' => $this->sendData + $extra + ['rating' => Video::RATING_LIST[1]],
                 'test' => $this->sendData + ['rating' => Video::RATING_LIST[1]],
             ]
         ];
@@ -171,6 +185,36 @@ class VideoControllerTest extends TestCase
                 'created_at',
                 'updated_at',
             ]);
+        }
+    }
+
+    public function testRollbackStore()
+    {
+        $controller = \Mockery::mock(VideoController::class)
+            ->makePartial()
+            ->shouldAllowMockingProtectedMethods();
+
+        $controller
+            ->shouldReceive('handleRelations')
+            ->once()
+            ->andThrow(new TestException());
+
+        $controller
+            ->shouldReceive('validate')
+            ->withAnyArgs()
+            ->andReturn($this->sendData);
+
+        $controller
+            ->shouldReceive('rulesStore')
+            ->withAnyArgs()
+            ->andReturn([]);
+
+        $request = \Mockery::mock(Request::class);
+
+        try {
+            $controller->store($request);
+        } catch (TestException $th) {
+            $this->assertCount(1, Video::all());
         }
     }
 
